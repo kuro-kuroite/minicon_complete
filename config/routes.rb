@@ -17,4 +17,8 @@ Rails.application.routes.draw do
   end
   
   resources :event_categories, only: [:show]
+  
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  end
 end

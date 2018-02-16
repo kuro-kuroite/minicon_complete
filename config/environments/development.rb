@@ -21,7 +21,10 @@ Rails.application.configure do
       'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
     }
   else
-    config.action_controller.perform_caching = false
+    config.action_controller.perform_caching = true
+    
+    config.action_mailer.default_url_options = { host: 'localhost:3000' }
+    config.action_mailer.delivery_method = :letter_opener_web
 
     config.cache_store = :null_store
   end
@@ -51,4 +54,15 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  
+  config.action_mailer.smtp_settings = {
+  :enable_starttls_auto => true,
+  :address => "smtp.gmail.com",
+  :port => 587,
+  :domain => 'smtp.gmail.com',
+  :user_name => "hogehoge@gmail.com", #gmailアドレス
+  :password => "password", #gmailパスワード
+  :authentication => 'login',
+}
 end
